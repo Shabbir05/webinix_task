@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create Task</title>
+</head>
+<body>
+    <h1>Create a New Task</h1>
+    <form id="taskForm">
+        <label>
+            Title:<br />
+            <input type="text" id="title" required />
+        </label>
+        <br /><br />
+        <label>
+            Description:<br />
+            <textarea id="description" rows="4" cols="50" required></textarea>
+        </label>
+        <br /><br />
+        <label>
+            Completed:
+            <input type="checkbox" id="is_completed" />
+        </label>
+        <br /><br />
+        <button type="submit">Create Task</button>
+    </form>
+
+    <p id="response"></p>
+
+    <script>
+        const form = document.getElementById('taskForm');
+        const responseEl = document.getElementById('response');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const is_completed = document.getElementById('is_completed').checked;
+
+            const payload = {
+                title,
+                description,
+                is_completed
+            };
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const error = await res.text();
+                    responseEl.style.color = 'red';
+                    responseEl.textContent = `Error: ${error}`;
+                    return;
+                }
+
+                const data = await res.json();
+                responseEl.style.color = 'green';
+                responseEl.textContent = `Task created! ID: ${data.id}`;
+                form.reset();
+            } catch (err) {
+                responseEl.style.color = 'red';
+                responseEl.textContent = `Fetch error: ${err.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
