@@ -1,6 +1,6 @@
 # Flask Task API
 
-This is a simple REST API built with Flask that supports CRUD operations for a "Task" entity using in-memory storage.
+This is a simple REST API built with Flask that supports CRUD operations for a "Task" entity using in-memory storage. A simple frontend html file has also been made for user input
 
 ## Features
 
@@ -20,7 +20,7 @@ This is a simple REST API built with Flask that supports CRUD operations for a "
 
    ```bash
    git clone https://github.com/Shabbir05/webinix_task.git
-   cd flask-task-api
+   cd webinix_task.git
    ```
 
 2. **Install dependencies**
